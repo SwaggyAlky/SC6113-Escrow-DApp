@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SafePay Escrow DApp</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="brand">SafePay</div>
+      <div class="subtitle">Ethereum Escrow Payment DApp</div>
+    </div>
+    <button id="connectBtn" class="btn primary">Connect MetaMask</button>
+  </header>
+
+  <main class="container">
+    <section class="hero card">
+      <div>
+        <p class="eyebrow">SC6113 Financial DApp</p>
+        <h1>Lock funds. Confirm delivery. Release safely.</h1>
+        <p class="muted">
+          A simple peer-to-peer escrow application running on Ethereum Sepolia.
+          The smart contract holds ETH until the buyer confirms delivery.
+        </p>
+      </div>
+
+      <div class="wallet-panel">
+        <div><span>Network</span><strong id="networkText">Not connected</strong></div>
+        <div><span>Wallet</span><strong id="walletText">—</strong></div>
+        <div><span>Balance</span><strong id="balanceText">—</strong></div>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
+        <h2>Create Escrow</h2>
+        <p class="muted">Buyer deposits Sepolia ETH and selects the seller.</p>
+
+        <form id="createForm">
+          <label>
+            Seller wallet address
+            <input id="sellerInput" type="text" placeholder="0x..." autocomplete="off" />
+          </label>
+
+          <label>
+            Amount (ETH)
+            <input id="amountInput" type="number" min="0" step="0.0001" placeholder="0.01" />
+          </label>
+
+          <button class="btn primary full" type="submit">Create & Fund Escrow</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Transaction Status</h2>
+        <div id="statusBox" class="status idle">
+          Connect MetaMask to begin.
+        </div>
+        <div id="txLinkWrap" class="tx-link hidden">
+          <a id="txLink" href="#" target="_blank" rel="noreferrer">View transaction on Etherscan</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <h2>My Escrows</h2>
+          <p class="muted">Escrows where the connected account is buyer or seller.</p>
+        </div>
+        <button id="refreshBtn" class="btn secondary">Refresh</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Role</th>
+              <th>Counterparty</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="escrowRows">
+            <tr><td colspan="7" class="empty">No wallet connected.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <h2>Backend Activity Log</h2>
+          <p class="muted">Off-chain transaction status records stored by Flask + SQLite.</p>
+        </div>
+      </div>
+      <div id="activityList" class="activity-list">
+        <div class="empty">No activity yet.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    SafePay demo project · Ethereum Sepolia · MetaMask · Solidity · Flask
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
